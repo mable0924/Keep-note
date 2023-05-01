@@ -11,7 +11,7 @@ import SwiftUI
 struct DraggableApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
