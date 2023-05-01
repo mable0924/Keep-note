@@ -8,17 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		1E1C67B429F57E7100637CC5 /* DraggableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67B329F57E7100637CC5 /* DraggableApp.swift */; };
-		1E1C67B629F57E7100637CC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67B529F57E7100637CC5 /* ContentView.swift */; };
 		1E1C67B829F57E7300637CC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1C67B729F57E7300637CC5 /* Assets.xcassets */; };
 		1E1C67BB29F57E7300637CC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1C67BA29F57E7300637CC5 /* Preview Assets.xcassets */; };
+		1E1C67C229F57F5D00637CC5 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C129F57F5D00637CC5 /* DraggableView.swift */; };
+		1E1C67C629F5916800637CC5 /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C529F5916800637CC5 /* MediaPicker.swift */; };
+		1E1C67C829F5918C00637CC5 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C729F5918C00637CC5 /* MediaItem.swift */; };
+		1E78C43C29F5BDE900A75C18 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43B29F5BDE900A75C18 /* Page.swift */; };
+		1E78C43E29F5BE3000A75C18 /* DraggablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43D29F5BE3000A75C18 /* DraggablePage.swift */; };
+		1E78C44029F5BEFD00A75C18 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43F29F5BEFD00A75C18 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1E1C67B029F57E7100637CC5 /* Draggable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Draggable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E1C67B329F57E7100637CC5 /* DraggableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableApp.swift; sourceTree = "<group>"; };
-		1E1C67B529F57E7100637CC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1E1C67B729F57E7300637CC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E1C67BA29F57E7300637CC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1E1C67C129F57F5D00637CC5 /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		1E1C67C529F5916800637CC5 /* MediaPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPicker.swift; sourceTree = "<group>"; };
+		1E1C67C729F5918C00637CC5 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		1E78C43B29F5BDE900A75C18 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		1E78C43D29F5BE3000A75C18 /* DraggablePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggablePage.swift; sourceTree = "<group>"; };
+		1E78C43F29F5BEFD00A75C18 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +61,15 @@
 		1E1C67B229F57E7100637CC5 /* Draggable */ = {
 			isa = PBXGroup;
 			children = (
+				1E1C67C729F5918C00637CC5 /* MediaItem.swift */,
 				1E1C67B329F57E7100637CC5 /* DraggableApp.swift */,
-				1E1C67B529F57E7100637CC5 /* ContentView.swift */,
+				1E1C67C129F57F5D00637CC5 /* DraggableView.swift */,
 				1E1C67B729F57E7300637CC5 /* Assets.xcassets */,
 				1E1C67B929F57E7300637CC5 /* Preview Content */,
+				1E1C67C529F5916800637CC5 /* MediaPicker.swift */,
+				1E78C43B29F5BDE900A75C18 /* Page.swift */,
+				1E78C43D29F5BE3000A75C18 /* DraggablePage.swift */,
+				1E78C43F29F5BEFD00A75C18 /* MainView.swift */,
 			);
 			path = Draggable;
 			sourceTree = "<group>";
@@ -137,7 +152,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E1C67B629F57E7100637CC5 /* ContentView.swift in Sources */,
+				1E1C67C229F57F5D00637CC5 /* DraggableView.swift in Sources */,
+				1E78C44029F5BEFD00A75C18 /* MainView.swift in Sources */,
+				1E78C43C29F5BDE900A75C18 /* Page.swift in Sources */,
+				1E1C67C829F5918C00637CC5 /* MediaItem.swift in Sources */,
+				1E1C67C629F5916800637CC5 /* MediaPicker.swift in Sources */,
+				1E78C43E29F5BE3000A75C18 /* DraggablePage.swift in Sources */,
 				1E1C67B429F57E7100637CC5 /* DraggableApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
