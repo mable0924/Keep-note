@@ -22,7 +22,6 @@ struct DraggablePage: View {
     
     var body: some View {
         ZStack {
-            
             VStack {
                 HStack {
                     Button(action: {
@@ -88,9 +87,6 @@ struct DraggablePage: View {
             }
             
         }
-    }
-}
-
 // 波點background -- calculate from GeometryReader ( not done )
 struct DottedPatternView: View {
     let dotSpacing: CGFloat

@@ -11,11 +11,13 @@
 		1E1C67B829F57E7300637CC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1C67B729F57E7300637CC5 /* Assets.xcassets */; };
 		1E1C67BB29F57E7300637CC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1C67BA29F57E7300637CC5 /* Preview Assets.xcassets */; };
 		1E1C67C229F57F5D00637CC5 /* DraggableView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C129F57F5D00637CC5 /* DraggableView+Gesture.swift */; };
+
 		1E1C67C629F5916800637CC5 /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C529F5916800637CC5 /* MediaPicker.swift */; };
 		1E1C67C829F5918C00637CC5 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C67C729F5918C00637CC5 /* MediaItem.swift */; };
 		1E78C43C29F5BDE900A75C18 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43B29F5BDE900A75C18 /* Page.swift */; };
 		1E78C43E29F5BE3000A75C18 /* DraggablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43D29F5BE3000A75C18 /* DraggablePage.swift */; };
 		1E78C44029F5BEFD00A75C18 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C43F29F5BEFD00A75C18 /* MainView.swift */; };
+
 		1ED8F8F62A1FE21E00E4176F /* DraggbleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED8F8F52A1FE21E00E4176F /* DraggbleObject.swift */; };
 /* End PBXBuildFile section */
 
