@@ -12,6 +12,8 @@ struct DraggablePage: View {
     @State private var player: AVPlayer?
     @Binding var page: Page
     @State private var showingMediaPicker = false
+    @State private var showingTextEntry = false
+    @State private var showingActionSheet = false
     @State private var scale: CGFloat = 1.0
     @State private var originalScale: CGFloat = 1.0
     @State private var viewScale: CGFloat = 1.0
@@ -31,66 +33,40 @@ struct DraggablePage: View {
                     }
                     Spacer()
                     Button(action: {
-                        showingMediaPicker.toggle()
+                        showingActionSheet.toggle()
                     }) {
                         Image(systemName: "plus.circle")
                             .font(.title)
                             .foregroundColor(.black)
                     }
+                    .actionSheet(isPresented: $showingActionSheet) {
+                        ActionSheet(title: Text("新增項目"), buttons: [
+                            .default(Text("新增圖片")) { showingMediaPicker.toggle() },
+                            .default(Text("新增文字")) { page.draggableItems.append(DraggbleObject(image: nil, videoURL: nil, text: "點兩下來輸入文字", width: 200, height: 200)) },
+                            .cancel()
+                        ])
+                    }
                     .sheet(isPresented: $showingMediaPicker) {
-                        MediaPicker(mediaItems: $page.mediaItems)
+                        MediaPicker(mediaItems: $page.draggableItems)
                     }
                 }
                 .padding()
                 .background(Color.white)
                 
-                GeometryReader { geometry in
-                    let dotSpacing: CGFloat = 20
-                    let patternSize = CGSize(width: geometry.size.width / dotSpacing, height: geometry.size.height / dotSpacing)
-                    ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                        
-                        ZStack {
-                            DottedPatternView(dotSpacing: dotSpacing, patternSize: patternSize, scale: originalScale)
-                                .opacity(0.5)
-                            ForEach(page.mediaItems.indices, id: \.self) { index in
-                                if let image = page.mediaItems[index].image {
-                                    DraggableView(mediaItem: $page.mediaItems[index]) {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200, height: 200)
-                                    }
-                                } else if let videoURL = page.mediaItems[index].videoURL {
-                                    DraggableView(mediaItem: $page.mediaItems[index], player: AVPlayer(url: videoURL)) {
-                                        VideoPlayer(player: player)
-                                            .frame(width: 300, height: 200)
-                                    }
-                                    .onAppear {
-                                        player?.play()
-                                    }
-                                    .onDisappear {
-                                        player?.pause()
-                                    }
-                                }
-                            }
-                        }
+                Spacer()
+            }
+            
+            ForEach(page.draggableItems.indices, id: \.self) { index in
+                if let image = page.draggableItems[index].image {
+                    DraggableView(draggableItem: $page.draggableItems[index], page: $page, index: index){
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                     }
-                    .scaleEffect(viewScale)
-                    .gesture(
-                        MagnificationGesture()
-                            .onChanged{ value in
-                                scale = min(max(value.magnitude, 0.1), 4)
-                                viewScale = originalScale * scale
-                            }
-                            .onEnded { value in
-                                scale = min(max(value.magnitude, 0.1), 4)
-                                originalScale *= scale
-                                scale = 1.0
-                                viewScale = 1.0
-                            }
-                    )
-                    
-                    
+                } else if let text = page.draggableItems[index].text {
+                    DraggableView(draggableItem: $page.draggableItems[index], page: $page, index: index){
+                        Text(text)
+                    }
                 }
             }
             
@@ -111,11 +87,7 @@ struct DraggablePage: View {
             }
             
         }
-        
-    }
-}
-
-
+// 波點background -- calculate from GeometryReader ( not done )
 struct DottedPatternView: View {
     let dotSpacing: CGFloat
     let patternSize: CGSize

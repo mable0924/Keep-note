@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct MediaPicker: UIViewControllerRepresentable {
-    @Binding var mediaItems: [MediaItem]
+    @Binding var mediaItems: [DraggbleObject]
     @Environment(\.presentationMode) private var presentationMode
 
     func makeCoordinator() -> Coordinator {
@@ -43,7 +43,7 @@ struct MediaPicker: UIViewControllerRepresentable {
                     itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
                         if let image = image as? UIImage {
                             DispatchQueue.main.async {
-                                self?.parent.mediaItems.append(MediaItem(image: image))
+                                self?.parent.mediaItems.append(DraggbleObject(image: image, videoURL: nil, text: nil, width: image.size.width * 0.3, height: image.size.height * 0.3))
                             }
                         }
                     }
@@ -52,7 +52,7 @@ struct MediaPicker: UIViewControllerRepresentable {
                         if let asset = asset as? AVURLAsset {
                             DispatchQueue.main.async {
                                 print(asset.url)
-                                self?.parent.mediaItems.append(MediaItem(videoURL: asset.url))
+                                self?.parent.mediaItems.append(DraggbleObject(image: nil,videoURL: asset.url, text: nil, width: 200, height: 200))
                             }
                         }
                     }

@@ -9,6 +9,11 @@ import Foundation
 
 struct Page: Identifiable {
     let id = UUID()
-    var mediaItems: [MediaItem] = []
+    var draggableItems: [DraggbleObject] = []
+    
+    mutating func remove(at index: Int) {
+        draggableItems.remove(at: index)
+    }
 }
+
 
