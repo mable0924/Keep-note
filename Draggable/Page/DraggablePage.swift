@@ -9,23 +9,17 @@ import SwiftUI
 import AVKit
 
 struct DraggablePage: View {
-    @State private var player: AVPlayer?
-    @Binding var page: Page
-    @State private var showingMediaPicker = false
-    @State private var showingTextEntry = false
-    @State private var showingActionSheet = false
-    @State private var scale: CGFloat = 1.0
-    @State private var originalScale: CGFloat = 1.0
-    @State private var viewScale: CGFloat = 1.0
-    @State private var size: CGFloat = 1.0
-    @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewModel: DraggablePageViewModel
+    @Environment(\.scenePhase) private var scenePhase
+    @Binding var isPresented: Bool
     
     var body: some View {
         ZStack {
             VStack {
                 HStack {
                     Button(action: {
-                        dismiss()
+                        print("test")
+                        isPresented.toggle()
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.title)
@@ -33,21 +27,21 @@ struct DraggablePage: View {
                     }
                     Spacer()
                     Button(action: {
-                        showingActionSheet.toggle()
+                        viewModel.showingActionSheet.toggle()
                     }) {
                         Image(systemName: "plus.circle")
                             .font(.title)
                             .foregroundColor(.black)
                     }
-                    .actionSheet(isPresented: $showingActionSheet) {
+                    .actionSheet(isPresented: $viewModel.showingActionSheet) {
                         ActionSheet(title: Text("新增項目"), buttons: [
-                            .default(Text("新增圖片")) { showingMediaPicker.toggle() },
-                            .default(Text("新增文字")) { page.draggableItems.append(DraggbleObject(image: nil, videoURL: nil, text: "點兩下來輸入文字", width: 200, height: 200)) },
+                            .default(Text("新增圖片")) { viewModel.showingMediaPicker.toggle() },
+                            .default(Text("新增文字")) { viewModel.draggableItems.append(DraggbleObject(image: nil, videoURL: nil, text: "點兩下來輸入文字", width: 200, height: 200)) },
                             .cancel()
                         ])
                     }
-                    .sheet(isPresented: $showingMediaPicker) {
-                        MediaPicker(mediaItems: $page.draggableItems)
+                    .sheet(isPresented: $viewModel.showingMediaPicker) {
+                        MediaPicker(mediaItems: $viewModel.page.draggableItems)
                     }
                 }
                 .padding()
@@ -56,15 +50,15 @@ struct DraggablePage: View {
                 Spacer()
             }
             
-            ForEach(page.draggableItems.indices, id: \.self) { index in
-                if let image = page.draggableItems[index].image {
-                    DraggableView(draggableItem: $page.draggableItems[index], page: $page, index: index){
-                        Image(uiImage: image)
+            ForEach($viewModel.page.draggableItems.indices, id: \.self) { index in
+                if let image = viewModel.page.draggableItems[index].image {
+                    DraggableView(draggableItem: $viewModel.page.draggableItems[index], page: $viewModel.page, index: index){
+                        Image(uiImage: convertBase64StringToImage(base64String: image)!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }
-                } else if let text = page.draggableItems[index].text {
-                    DraggableView(draggableItem: $page.draggableItems[index], page: $page, index: index){
+                } else if let text = viewModel.page.draggableItems[index].text {
+                    DraggableView(draggableItem: $viewModel.page.draggableItems[index], page: $viewModel.page, index: index){
                         Text(text)
                     }
                 }
@@ -74,7 +68,7 @@ struct DraggablePage: View {
                 Spacer()
                 HStack {
                     
-                    Text(String(format: "%.0f%%", originalScale * scale * 100))
+                    Text(String(format: "%.0f%%", viewModel.originalScale * viewModel.scale * 100))
                         .font(.system(size: 14, weight: .bold))
                         .padding(6)
                         .background(Color.black.opacity(0.5))
@@ -86,7 +80,13 @@ struct DraggablePage: View {
                 
             }
             
+            
         }
+        
+    }
+    
+}
+
 // 波點background -- calculate from GeometryReader ( not done )
 struct DottedPatternView: View {
     let dotSpacing: CGFloat
@@ -106,5 +106,5 @@ struct DottedPatternView: View {
             }
         }
     }
-
+    
 }

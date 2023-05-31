@@ -15,6 +15,7 @@ struct DraggableView<Content>: View where Content: View {
     @Binding var page: Page
     @State private var initialPosition: CGSize = .zero
     @State private var selected = false
+    @StateObject private var initialPositionUpdater: InitialPositionUpdater
     
     let index: Int
     let content: () -> Content
@@ -26,18 +27,16 @@ struct DraggableView<Content>: View where Content: View {
         self.index = index
         self.player = player
         self.content = content
+        
+        self._initialPositionUpdater = StateObject(wrappedValue: InitialPositionUpdater(position: draggableItem.wrappedValue.position))
     }
 
     
     var body: some View {
         content()
-            .offset(x: dragState.translation.width, y: dragState.translation.height)
             .frame(width: draggableItem.width * magnificationFactor, height: draggableItem.height * magnificationFactor)
-            .position(x: draggableItem.position.width,
-                      y: draggableItem.position.height)
-            .onAppear {
-                initialPosition = draggableItem.position
-            }
+            .position(x: draggableItem.position.width + dragState.translation.width,
+                      y: draggableItem.position.height + dragState.translation.height)
             .onTapGesture {
                 print("Tap detected")
                 selected.toggle()
@@ -61,18 +60,19 @@ struct DraggableView<Content>: View where Content: View {
                         case .first(true):
                             state = .pressing
                         case .second(true, let drag):
-                            if let dragTranslation = drag?.translation {
-                                let deltaX = initialPosition.width + dragTranslation.width
-                                let deltaY = initialPosition.height + dragTranslation.height
-                                draggableItem.position = CGSize(width: deltaX, height: deltaY)
-                            }
+                            state = .dragging(translation: drag?.translation ?? .zero)
                         default:
                             break
                         }
                         
                     })
                     .onEnded({ (value) in
-                        initialPosition = draggableItem.position
+                        guard case .second(true, let drag?) = value else { return }
+                            let deltaX = initialPositionUpdater.initialPosition.width + drag.translation.width
+                            let deltaY = initialPositionUpdater.initialPosition.height + drag.translation.height
+                            draggableItem.position = CGSize(width: deltaX, height: deltaY)
+
+                            initialPositionUpdater.initialPosition = draggableItem.position
                     })
             )
             
@@ -123,5 +123,13 @@ struct DraggableView<Content>: View where Content: View {
                 return true
             }
         }
+    }
+}
+
+class InitialPositionUpdater: ObservableObject {
+    @Published var initialPosition: CGSize
+    
+    init(position: CGSize) {
+        self.initialPosition = position
     }
 }
